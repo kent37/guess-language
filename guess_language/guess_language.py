@@ -34,7 +34,7 @@ __all__ = 'guessLanguage guessLanguageName guessLanguageInfo guessLanguageTag gu
 
 import codecs, os, re, sys, unicodedata
 from collections import defaultdict
-from blocks import unicodeBlock
+from .blocks import unicodeBlock
 
 
 MIN_LENGTH = 20
