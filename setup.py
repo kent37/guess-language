@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name="guess-language",
-    version="0.2",
+    version="1.0.dev0",
     description="Guess the natural language of a text",
     license="LGPL",
     platforms=["any"],
