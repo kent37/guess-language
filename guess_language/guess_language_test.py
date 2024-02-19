@@ -19,29 +19,29 @@
 
 import unittest
 
-from guess_language import (createOrderedModel, find_runs, 
+from .guess_language import (createOrderedModel, find_runs, 
     guessLanguage, guessLanguageName, guessLanguageTag, guessLanguageId, guessLanguageInfo,
     normalize, UNKNOWN)
 
 class guess_language_test(unittest.TestCase):
     def test_normalize(self):
-        self.assertEquals('abc def ghi', normalize(u'abc4def   !@#!#@$   ghi'))
+        self.assertEqual('abc def ghi', normalize('abc4def   !@#!#@$   ghi'))
         
-        s = u"På denne side bringer vi billeder fra de mange forskellige forberedelser til arrangementet efterhånden som vi får dem "
-        self.assertEquals(s, normalize(s))
+        s = "På denne side bringer vi billeder fra de mange forskellige forberedelser til arrangementet efterhånden som vi får dem "
+        self.assertEqual(s, normalize(s))
         
     def test_find_runs(self):
-        self.assertEquals(['Basic Latin'], find_runs(u'This is a test of the language checker'))
-        self.assertEquals(set(['Basic Latin', 'Extended Latin']), set(find_runs(u'abcdééé')))
+        self.assertEqual(['Basic Latin'], find_runs('This is a test of the language checker'))
+        self.assertEqual(set(['Basic Latin', 'Extended Latin']), set(find_runs('abcdééé')))
         
-        s = u"Сайлау нәтижесінде дауыстардың басым бөлігін ел премьер министрі Виктор Янукович пен оның қарсыласы, оппозиция жетекшісі Виктор Ющенко алды."
-        self.assertEquals(['Cyrillic'], find_runs(s))
+        s = "Сайлау нәтижесінде дауыстардың басым бөлігін ел премьер министрі Виктор Янукович пен оның қарсыласы, оппозиция жетекшісі Виктор Ющенко алды."
+        self.assertEqual(['Cyrillic'], find_runs(s))
         
     
     def test_createOrderedModel(self):
-        self.assertEquals([u'abc'], createOrderedModel(u'abc'))
-        self.assertEquals(u'abc bca'.split(), createOrderedModel(u'abca'))
-        self.assertEquals([u'cab', u'abc', u'abd', u'bca', u'bdc', u'dca'], createOrderedModel(u'abcabdcab'))
+        self.assertEqual(['abc'], createOrderedModel('abc'))
+        self.assertEqual('abc bca'.split(), createOrderedModel('abca'))
+        self.assertEqual(['cab', 'abc', 'abd', 'bca', 'bdc', 'dca'], createOrderedModel('abcabdcab'))
         
         
     def test_guess(self):
@@ -83,13 +83,13 @@ class guess_language_test(unittest.TestCase):
         ]
 
         for text, name in tests:
-            self.assertEquals(name, guessLanguage(text))
+            self.assertEqual(name, guessLanguage(text))
 
         text = "Verifions que le détecteur de langues marche"
-        self.assertEquals('fr', guessLanguageTag(text))
-        self.assertEquals('French', guessLanguageName(text))
-        self.assertEquals(26150, guessLanguageId(text))
-        self.assertEquals(('fr', 26150, 'French'), guessLanguageInfo(text))
+        self.assertEqual('fr', guessLanguageTag(text))
+        self.assertEqual('French', guessLanguageName(text))
+        self.assertEqual(26150, guessLanguageId(text))
+        self.assertEqual(('fr', 26150, 'French'), guessLanguageInfo(text))
         
         
     def setUp(self):

@@ -17,14 +17,14 @@
 
 import unittest
 
-from blocks import unicodeBlock
+from .blocks import unicodeBlock
 
 class blocks_test(unittest.TestCase):
     def test_unicodeBlock(self):
         for c in range(128):
             self.assertBlock('Basic Latin', c)
         
-        for c in range(0x80, 0x180) + range(0x250, 0x2B0):
+        for c in list(range(0x80, 0x180)) + list(range(0x250, 0x2B0)):
             self.assertBlock('Extended Latin', c)
         
         self.assertBlock('Thai', 0xE00)
@@ -36,9 +36,9 @@ class blocks_test(unittest.TestCase):
         self.assertBlock('Cyrillic', 0x421)
         
     def assertBlock(self, name, c):
-        c = unichr(c)
+        c = chr(c)
         block = unicodeBlock(c)
-        self.assertEquals(name, unicodeBlock(c), '%s != %s for %r' % (name, block, c))
+        self.assertEqual(name, unicodeBlock(c), '%s != %s for %r' % (name, block, c))
             
 
     def setUp(self):
