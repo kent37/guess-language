@@ -1,4 +1,4 @@
-''' Copyright (c) 2008, Kent S Johnson 
+""" Copyright (c) 2008, Kent S Johnson 
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -13,37 +13,37 @@
     You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-'''
+"""
 
 import unittest
 
 from .blocks import unicodeBlock
 
+
 class blocks_test(unittest.TestCase):
     def test_unicodeBlock(self):
         for c in range(128):
-            self.assertBlock('Basic Latin', c)
-        
+            self.assertBlock("Basic Latin", c)
+
         for c in list(range(0x80, 0x180)) + list(range(0x250, 0x2B0)):
-            self.assertBlock('Extended Latin', c)
-        
-        self.assertBlock('Thai', 0xE00)
-        self.assertBlock('Thai', 0xE7F)
-        self.assertBlock('Lao', 0xE80)
-        self.assertBlock('Lao', 0x0EFF)
-        self.assertBlock('Tibetan', 0xF00)
-        self.assertBlock('Tibetan', 0xFFF)
-        self.assertBlock('Cyrillic', 0x421)
-        
+            self.assertBlock("Extended Latin", c)
+
+        self.assertBlock("Thai", 0xE00)
+        self.assertBlock("Thai", 0xE7F)
+        self.assertBlock("Lao", 0xE80)
+        self.assertBlock("Lao", 0x0EFF)
+        self.assertBlock("Tibetan", 0xF00)
+        self.assertBlock("Tibetan", 0xFFF)
+        self.assertBlock("Cyrillic", 0x421)
+
     def assertBlock(self, name, c):
         c = chr(c)
         block = unicodeBlock(c)
-        self.assertEqual(name, unicodeBlock(c), '%s != %s for %r' % (name, block, c))
-            
+        self.assertEqual(name, unicodeBlock(c), "%s != %s for %r" % (name, block, c))
 
     def setUp(self):
         pass
 
-    
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
