@@ -1,1 +1,1 @@
-from guess_language import *
+from .guess_language import *
