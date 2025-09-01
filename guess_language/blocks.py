@@ -32,7 +32,9 @@ def _loadBlocks():
     endpoints = []
     names = []
     splitter = re.compile(r"^(....)\.\.(....); (.*)$")
-    for line in open(blocksPath):
+    with open(blocksPath, "r") as fh:
+        lines = fh.readlines()
+    for line in lines:
         if line.startswith("#"):
             continue
         line = line.strip()
