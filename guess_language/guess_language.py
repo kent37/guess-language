@@ -279,12 +279,12 @@ def _load_models():
         modelPath = os.path.join(modelsDir, modelFile)
         if os.path.isdir(modelPath):
             continue
-        f = codecs.open(modelPath, "r", "utf-8")
-        model = {}  # QHash<QString,int> model
-        for line in f:
-            m = lineRe.search(line)
-            if m:
-                model[m.group(1)] = int(m.group(2))
+        with codecs.open(modelPath, "r", "utf-8") as f:
+            model = {}  # QHash<QString,int> model
+            for line in f:
+                m = lineRe.search(line)
+                if m:
+                    model[m.group(1)] = int(m.group(2))
 
         models[modelFile.lower()] = model
 
