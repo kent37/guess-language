@@ -1,4 +1,4 @@
-''' Categorize unicode characters by the code block in which they are found.
+""" Categorize unicode characters by the code block in which they are found.
 
     Copyright (c) 2008, Kent S Johnson 
 
@@ -15,49 +15,53 @@
     You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-'''
+"""
 
-import os, re
+import os
+import re
 from bisect import bisect_left
 
+
 def _loadBlocks():
-    ''' Load Blocks.txt.
-        Create and return two parallel lists. One has the start and end points for
-        codepoint ranges, the second has the corresponding block name.
-    '''
+    """Load Blocks.txt.
+    Create and return two parallel lists. One has the start and end points for
+    codepoint ranges, the second has the corresponding block name.
+    """
     # Expects our version of Blocks.txt to be in the same dir as this file
-    blocksPath = os.path.join(os.path.dirname(__file__), 'Blocks.txt')
+    blocksPath = os.path.join(os.path.dirname(__file__), "Blocks.txt")
     endpoints = []
     names = []
-    splitter = re.compile(r'^(....)\.\.(....); (.*)$')
-    for line in open(blocksPath):
-        if line.startswith('#'):
+    splitter = re.compile(r"^(....)\.\.(....); (.*)$")
+    with open(blocksPath, "r") as fh:
+        lines = fh.readlines()
+    for line in lines:
+        if line.startswith("#"):
             continue
         line = line.strip()
         if not line:
             continue
-        
+
         m = splitter.match(line)
         assert m
         start = int(m.group(1), 16)
         end = int(m.group(2), 16)
         name = m.group(3)
-        
+
         endpoints.append(start)
         endpoints.append(end)
-        
+
         names.append(name)
         names.append(name)
-    
+
     return endpoints, names
-    
+
+
 _endpoints, _names = _loadBlocks()
 
-    
+
 def unicodeBlock(c):
-    ''' Returns the name of the unicode block containing c
-        c must be a single character. '''
-    
+    """Returns the name of the unicode block containing c
+    c must be a single character."""
+
     ix = bisect_left(_endpoints, ord(c))
     return _names[ix]
-    
